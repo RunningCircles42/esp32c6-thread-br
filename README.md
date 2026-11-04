@@ -69,8 +69,3 @@ ot ipaddr
   (`.venv/bin/esptool --chip esp32c6 erase-flash`).
 - To use an external U.FL antenna, set `XIAO_USE_EXTERNAL_ANT` to `1` in
   `firmware/main/esp_ot_br.c`.
-
-## License
-
-The upstream example code is in the public domain (CC0-1.0); the same applies to the
-changes in this repository.
