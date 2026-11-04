@@ -5,6 +5,9 @@ A standalone, single-chip [Thread](https://openthread.io/) Border Router running
 It joins your Wi-Fi network and forms its own Thread network on power-up, so it can be
 placed anywhere with USB power.
 
+**→ Step-by-step instructions: [docs/GUIDE.md](docs/GUIDE.md)** (build, flash, verify, and
+connect to Home Assistant / Matter).
+
 Based on Espressif's [`ot_br` example](https://github.com/espressif/esp-idf/tree/v6.0.3/examples/openthread/ot_br)
 from ESP-IDF v6.0.3 (original README in [`firmware/README.espressif.md`](firmware/README.espressif.md)).
 
