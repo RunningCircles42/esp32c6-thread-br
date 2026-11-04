@@ -1,0 +1,12 @@
+# Private credentials — never commit
+sdkconfig.secrets
+
+# ESP-IDF build output and generated config
+firmware/build/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/managed_components/
+
+# Local tooling
+.venv/
+.DS_Store

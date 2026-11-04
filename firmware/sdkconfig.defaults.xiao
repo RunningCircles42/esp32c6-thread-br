@@ -1,0 +1,25 @@
+# Overrides for a standalone, single-chip Thread Border Router on the
+# Seeed Studio XIAO ESP32C6. Applied after sdkconfig.defaults and before
+# ../sdkconfig.secrets (see SDKCONFIG_DEFAULTS in CMakeLists.txt).
+
+CONFIG_IDF_TARGET="esp32c6"
+
+# Use the C6's own 802.15.4 radio instead of an external RCP chip over UART,
+# and time-share the single RF path between Wi-Fi and Thread.
+CONFIG_OPENTHREAD_RADIO_NATIVE=y
+CONFIG_ESP_COEX_SW_COEXIST_ENABLE=y
+
+# Join Wi-Fi and form/resume the Thread network on power-up (no CLI needed).
+CONFIG_OPENTHREAD_NETWORK_AUTO_START=y
+CONFIG_OPENTHREAD_CLI_WIFI=n
+CONFIG_EXAMPLE_CONNECT_WIFI=y
+CONFIG_EXAMPLE_CONNECT_ETHERNET=n
+
+# The XIAO's USB-C port is the chip's native USB-Serial/JTAG; UART0 is only on
+# pins D6/D7. Route logs and the "ot" CLI to USB.
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+CONFIG_OPENTHREAD_CONSOLE_TYPE_USB_SERIAL_JTAG=y
+CONFIG_OPENTHREAD_CLI=y
+
+# Board has 4 MB embedded flash (ESP32-C6FH4).
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
