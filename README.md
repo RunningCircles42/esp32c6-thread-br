@@ -16,7 +16,7 @@ from ESP-IDF v6.0.3 (original README in [`firmware/README.espressif.md`](firmwar
 | What | Where |
 |---|---|
 | Uses the C6's built-in 802.15.4 radio instead of an external RCP chip, with Wi-Fi/Thread software coexistence | `firmware/sdkconfig.defaults.xiao` |
-| Auto-starts: connects to Wi-Fi and forms/resumes the Thread network on boot | `firmware/sdkconfig.defaults.xiao` |
+| Auto-starts: connects to Wi-Fi and forms/resumes the Thread network on boot (IDF v6.0's `ot_br` no longer starts Thread by itself, so `app_main` calls `ot_network_auto_start()`) | `firmware/sdkconfig.defaults.xiao`, `firmware/main/esp_ot_br.c` |
 | Logs and the `ot` CLI on the XIAO's USB-C port (USB-Serial/JTAG) | `firmware/sdkconfig.defaults.xiao` |
 | Drives the XIAO RF switch (GPIO3 low = enabled, GPIO14 low = onboard antenna) | `firmware/main/esp_ot_br.c` |
 | Wi-Fi and Thread credentials read from a git-ignored `sdkconfig.secrets` | `firmware/CMakeLists.txt` |

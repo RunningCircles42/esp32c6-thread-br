@@ -156,6 +156,11 @@ void app_main(void)
 #endif
 #if CONFIG_OPENTHREAD_BORDER_ROUTER && CONFIG_OPENTHREAD_NETWORK_AUTO_START
     ESP_ERROR_CHECK(esp_openthread_border_router_start());
+    // In ESP-IDF v6.0.x, esp_openthread_border_router_start() only connects the
+    // backbone and initializes border routing; it no longer forms/joins the
+    // Thread network. Do that here (resumes the stored dataset if one exists,
+    // otherwise creates one from the CONFIG_OPENTHREAD_NETWORK_* values).
+    ot_network_auto_start();
 #if CONFIG_ESP_COEX_SW_COEXIST_ENABLE && CONFIG_SOC_IEEE802154_SUPPORTED
     ESP_ERROR_CHECK(esp_coex_wifi_i154_enable());
 #endif

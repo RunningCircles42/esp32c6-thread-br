@@ -1,5 +1,7 @@
 # Guide: Turn a XIAO ESP32C6 into a Thread Border Router
 
+*Tested with ESP-IDF v6.0.3 on a XIAO ESP32C6 (ESP32-C6FH4, rev v0.2), November 2026.*
+
 This guide takes a Seeed Studio XIAO ESP32C6 from the box to a working Thread Border
 Router on your Wi-Fi network, and then connects it to Home Assistant so you can add
 Matter-over-Thread devices.
@@ -148,6 +150,18 @@ Then try these commands in the console:
 | `ot networkname` | e.g. `XIAO-Thread` |
 | `ot br state` | `running` |
 | `ot ipaddr` | several IPv6 addresses |
+| `ot br omrprefix` | a `fdxx:…::/64` prefix: the address range Thread devices use |
+
+**Check from your computer** (optional). The board advertises itself as `esp-ot-br`, and
+your computer learns a route to the Thread network automatically:
+
+```sh
+dns-sd -B _meshcop._udp local.     # macOS; Linux: avahi-browse -r _meshcop._udp
+ping6 <the fdxx: address from "ot ipaddr" that starts with the OMR prefix>
+```
+
+Round-trip times of tens to a few hundred milliseconds are normal: Wi-Fi and Thread
+share the radio.
 
 On first boot, the board creates the Thread network from `sdkconfig.secrets` and
 saves it to flash. After that it resumes the same network on every power-up,
@@ -237,6 +251,7 @@ Every device on the old Thread network has to be added again afterwards.
 | No `/dev/cu.usbmodem*` or `/dev/ttyACM*` appears | Use a data-capable USB-C cable; try download mode (hold B, tap R, release B). |
 | `Missing .../sdkconfig.secrets` during build | Run `scripts/gen-secrets.sh` first. |
 | Console shows nothing | Press **R**, since early boot messages appear before you connect. Check that no other program has the port open. |
+| Log shows `Wi-Fi disconnected 201` and the board restarts after 7 attempts | Reason 201 means *network not found*: the Wi-Fi name is misspelled (it is case-sensitive) or the network has no 2.4 GHz band. The board keeps restarting and retrying until it connects. |
 | Wi-Fi never connects | Check the name and password (case-sensitive, straight quotes) and that the network has a 2.4 GHz band. Rebuild and reflash after edits. |
 | `ot state` stays `detached` or `disabled` | Check the boot log for errors; erase flash and reflash to start fresh. |
 | Home Assistant can't add Matter-over-Thread devices | Make sure this network is the **preferred** network (step 8.4) and the phone has the credentials (step 8.5). The Home Assistant host must accept IPv6 router advertisements from the border router. |
